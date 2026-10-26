@@ -14,6 +14,6 @@ app.use('/api', innRoutes);
 app.use('/api', roomRoutes);
 app.use('/api', vehicleRoutes);
 
-app.listen(3000, () => {
+app.listen(3000, '0.0.0.0', () => {
   console.log('Servidor corriendo en el puerto 3000');
 });
