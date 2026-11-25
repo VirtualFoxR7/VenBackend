@@ -51,6 +51,74 @@ const InnModel = {
         WHERE inns.id = ?`;
         const [rows] = await pool.query(query, [id]);
         return rows[0]; 
+    },
+
+    async create(innData) {
+        const {
+            name,
+            description = null,
+            image_url = null,
+            status = 'active',
+            email = null,
+            phone = null,
+            user_id,
+            block = 0,
+            quality = null,
+            state_id = null,
+            municipality_id = null,
+            parish_id = null,
+            category_id = null
+        } = innData;
+
+        const query = `INSERT INTO inns (
+            name,
+            description,
+            image_url,
+            status,
+            email,
+            phone,
+            user_id,
+            block,
+            quality,
+            state_id,
+            municipality_id,
+            parish_id,
+            category_id
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        const params = [
+            name,
+            description,
+            image_url,
+            status,
+            email,
+            phone,
+            user_id,
+            block,
+            quality,
+            state_id,
+            municipality_id,
+            parish_id,
+            category_id
+        ];
+
+        const [result] = await pool.query(query, params);
+        return {
+            id: result.insertId,
+            name,
+            description,
+            image_url,
+            status,
+            email,
+            phone,
+            user_id,
+            block,
+            quality,
+            state_id,
+            municipality_id,
+            parish_id,
+            category_id
+        };
     }
 };
 

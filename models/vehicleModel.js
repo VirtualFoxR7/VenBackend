@@ -79,6 +79,86 @@ const VehicleModel = {
         WHERE vehicles.inn_id = ?`;
         const [rows] = await pool.query(query, [innId]);
         return rows;
+    },
+
+    async create(vehicleData) {
+        const {
+            inn_id,
+            type = null,
+            brand = null,
+            description = null,
+            price,
+            capacity = 1,
+            year = null,
+            model = null,
+            registration_plate = null,
+            image_url = null,
+            status = 'available',
+            block = 0,
+            image_url2 = null,
+            image_url3 = null,
+            image_url4 = null,
+            image_url5 = null
+        } = vehicleData;
+
+        const query = `INSERT INTO vehicles (
+            inn_id,
+            type,
+            brand,
+            description,
+            price,
+            capacity,
+            year,
+            model,
+            registration_plate,
+            image_url,
+            status,
+            block,
+            image_url2,
+            image_url3,
+            image_url4,
+            image_url5
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        const params = [
+            inn_id,
+            type,
+            brand,
+            description,
+            price,
+            capacity,
+            year,
+            model,
+            registration_plate,
+            image_url,
+            status,
+            block,
+            image_url2,
+            image_url3,
+            image_url4,
+            image_url5
+        ];
+
+        const [result] = await pool.query(query, params);
+        return {
+            id: result.insertId,
+            inn_id,
+            type,
+            brand,
+            description,
+            price,
+            capacity,
+            year,
+            model,
+            registration_plate,
+            image_url,
+            status,
+            block,
+            image_url2,
+            image_url3,
+            image_url4,
+            image_url5
+        };
     }
 };
 

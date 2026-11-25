@@ -36,6 +36,65 @@ const VehicleController = {
             console.error('Error al obtener vehículos de la posada:', error);
             res.status(500).json({ success: false, error: 'Error interno del servidor' });
         }
+    },
+
+    // Resumen: Agrega el método create en VehicleController para validar datos obligatorios del vehículo, invocar VehicleModel.create y devolver el registro creado con código 201.
+    async create(req, res) {
+        try {
+            const {
+                inn_id,
+                type,
+                brand,
+                description,
+                price,
+                capacity,
+                year,
+                model,
+                registration_plate,
+                image_url,
+                status,
+                block,
+                image_url2,
+                image_url3,
+                image_url4,
+                image_url5
+            } = req.body;
+
+            if (!inn_id || price === undefined || price === null) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'El identificador de la posada y el precio son obligatorios'
+                });
+            }
+
+            const createdVehicle = await VehicleModel.create({
+                inn_id,
+                type,
+                brand,
+                description,
+                price,
+                capacity,
+                year,
+                model,
+                registration_plate,
+                image_url,
+                status,
+                block,
+                image_url2,
+                image_url3,
+                image_url4,
+                image_url5
+            });
+
+            res.status(201).json({
+                success: true,
+                message: 'Vehículo creado con éxito',
+                data: createdVehicle
+            });
+        } catch (error) {
+            console.error('Error al crear el vehículo:', error);
+            res.status(500).json({ success: false, error: 'Error interno del servidor' });
+        }
     }
 };
 
